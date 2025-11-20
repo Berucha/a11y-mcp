@@ -274,7 +274,7 @@ export const GoodComponent = () => {
 A: MCP is a standardized protocol (JSON-RPC) for tool integration, designed for AI assistants and development tools. In our system, MCP provides:
 - **Standardized interface**: The GitHub Actions workflow communicates with the analyzer via MCP protocol
 - **Separation of concerns**: The MCP server handles analysis, clients handle integration
-- **Future-ready**: Enables integration with AI coding assistants (like Claude Desktop) and planned VS Code extensions
+- **Future-ready**: Enables integration with AI coding assistants and planned VS Code extensions
 - **Protocol compliance**: Uses JSON-RPC 2.0 over stdio, making it compatible with any MCP client
 
 **Q: Why not just use existing accessibility tools?**
