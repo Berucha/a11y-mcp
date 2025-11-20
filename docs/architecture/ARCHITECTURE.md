@@ -33,9 +33,9 @@ graph TB
         end
         
         subgraph "Parsers"
+            RegexParser[Regex Parser<br/>Pattern Matching]
             JSXParser[JSX/TSX Parser<br/>Babel AST]
             CSSParser[CSS Parser<br/>PostCSS]
-            RegexParser[Regex Parser<br/>Pattern Matching]
         end
     end
     
@@ -88,40 +88,38 @@ graph TB
 ```mermaid
 graph LR
     subgraph "Core Components"
-        A[Accessibility Scanner]
-        B[Hybrid Analyzer]
-        C[Rule Engine]
-        D[Parser Factory]
+        A[MCP Server<br/>mcp-server.js]
+        B[Hybrid Analyzer<br/>hybrid-analyzer.js]
+        C[Regex Analyzer<br/>regex-analyzer.js]
     end
     
     subgraph "Fast Path"
-        E[Regex Analyzer]
-        F[Pattern Matcher]
+        D[Regex Patterns]
+        E[Pattern Matching]
     end
     
     subgraph "AST Path"
-        G[Babel Parser]
-        H[PostCSS Parser]
-        I[AST Traverser]
+        F[Babel Parser<br/>JSX/TSX]
+        G[PostCSS Parser<br/>CSS/SCSS]
+        H[AST Traversal]
     end
     
     subgraph "Integration"
-        J[MCP Server]
-        K[GitHub Actions]
-        L[CLI Tool]
+        I[MCP Client<br/>mcp-client.js]
+        J[GitHub Actions<br/>analyze-pr-mcp.js]
+        K[CLI Tool<br/>cli-scanner.js]
     end
     
     A --> B
-    B -->|Fast| E
-    B -->|Complex| G
-    E --> F
-    G --> H
-    G --> I
-    B --> C
+    B -->|Fast| C
+    B -->|Complex| F
     C --> D
-    A --> J
+    C --> E
+    F --> G
+    F --> H
+    A --> I
+    I --> J
     A --> K
-    A --> L
 ```
 
 ## Data Flow
@@ -132,11 +130,11 @@ sequenceDiagram
     participant GA as GitHub Actions
     participant Analyzer as analyze-pr-mcp.js
     participant Client as mcp-client.js
-    participant MCP as MCP Server
-    participant Hybrid as Hybrid Analyzer
-    participant Fast as Fast Path
-    participant AST as AST Path
-    participant Rules as Rule Engine
+    participant MCP as MCP Server<br/>mcp-server.js
+    participant Hybrid as Hybrid Analyzer<br/>hybrid-analyzer.js
+    participant Fast as Fast Path<br/>regex-analyzer.js
+    participant AST as AST Path<br/>Babel/PostCSS
+    participant Rules as WCAG Rules<br/>Embedded in Analyzers
     participant GitHub as GitHub API
     
     PR->>GA: PR Event Triggered
@@ -157,8 +155,7 @@ sequenceDiagram
         AST->>Rules: AST Results
     end
     
-    Rules->>Rules: Apply WCAG Rules
-    Rules->>Rules: Validate LDS Components
+    Rules->>Rules: Apply WCAG 2.2 Rules
     Rules->>MCP: Return Violations
     MCP->>Client: JSON-RPC Response
     Client-->>Analyzer: Parsed Results
@@ -209,9 +206,9 @@ graph TB
     end
     
     subgraph "Parsing"
+        Regex[Regex Patterns<br/>Fast Checks]
         Babel[Babel Parser<br/>JSX/TSX]
         PostCSS[PostCSS<br/>CSS/SCSS]
-        Regex[Regex Patterns<br/>Fast Checks]
     end
     
     subgraph "Analysis"
@@ -221,8 +218,9 @@ graph TB
     end
     
     subgraph "Integration"
-        GitHub[GitHub Actions]
-        CLI[CLI Tool]
+        GitHub[GitHub Actions<br/>analyze-pr-mcp.js]
+        CLI[CLI Tool<br/>cli-scanner.js]
+        MCPClient[MCP Client<br/>mcp-client.js]
         API[GitHub API]
     end
     
@@ -249,33 +247,26 @@ graph TB
 a11y-mcp/
 ├── src/
 │   ├── core/
-│   │   ├── scanner.ts          # Main scanner orchestrator
-│   │   ├── hybrid-analyzer.ts  # Hybrid decision engine
-│   │   └── rule-engine.ts      # WCAG rule engine
-│   ├── parsers/
-│   │   ├── fast-parser.ts      # Regex-based fast parser
-│   │   ├── ast-parser.ts       # AST-based parser
-│   │   ├── javascript.ts        # Babel JSX/TSX parser
-│   │   └── css.ts              # PostCSS parser
-│   ├── rules/
-│   │   ├── wcag-rules.ts       # WCAG 2.2 rules
-│   │   ├── lds-rules.ts        # LDS component rules
-│   │   └── custom-rules.ts      # Custom rule definitions
-│   ├── integration/
-│   │   ├── mcp-server.ts       # MCP server implementation
-│   │   ├── github-actions.ts   # GitHub Actions integration
-│   │   └── cli.ts              # CLI interface
-│   └── utils/
-│       ├── color-contrast.ts   # Color contrast calculator
-│       └── config.ts           # Configuration management
+│   │   ├── hybrid-analyzer.js  # Hybrid decision engine (fast regex + AST)
+│   │   └── regex-analyzer.js   # Fast regex-based analyzer
+│   └── mcp-server.js           # MCP server implementation (JSON-RPC)
 ├── scripts/
-│   ├── setup.js                # Easy integration script
-│   └── analyze-pr.js           # PR analysis script
-├── .github/
-│   └── workflows/
-│       └── accessibility-review.yml
+│   ├── analyze-pr-mcp.js       # GitHub Actions PR analyzer
+│   ├── mcp-client.js           # MCP client for JSON-RPC communication
+│   ├── color-contrast.js       # Color contrast calculator
+│   ├── scan-parallel.js        # Parallel file scanning
+│   ├── setup-integration.js    # Easy integration setup script
+│   └── test-mcp-integration.js # MCP integration tests
+├── cli-scanner.js              # Standalone CLI tool
+├── run.sh                      # Batch file scanner script
+├── github-actions/
+│   └── accessibility-review.yml # GitHub Actions workflow
+├── examples/                   # Test files with violations
+├── tests/
+│   └── accessibility-checks.test.js # Test suite
 └── docs/
-    └── ARCHITECTURE.md         # This file
+    └── architecture/
+        └── ARCHITECTURE.md     # This file
 ```
 
 ## Performance Characteristics
@@ -288,11 +279,15 @@ a11y-mcp/
 
 ## Integration Points
 
-1. **GitHub Actions**: Automated PR checks
-2. **MCP Protocol**: Standardized tool interface
-3. **CLI Tool**: Local development
-4. **LDS Storybook**: Component validation
-5. **Configuration**: Per-repo customization
+1. **GitHub Actions**: Automated PR checks via `analyze-pr-mcp.js`
+2. **MCP Protocol**: Standardized tool interface (JSON-RPC via stdio)
+3. **CLI Tool**: Local development via `cli-scanner.js`
+4. **MCP Client**: `mcp-client.js` for programmatic access
+5. **GitHub API**: PR comments and check runs via `@octokit/rest`
+
+**Planned Integrations:**
+- **LDS Storybook**: Component validation (Phase 2)
+- **Configuration**: Per-repo customization (Phase 3)
 
 ---
 

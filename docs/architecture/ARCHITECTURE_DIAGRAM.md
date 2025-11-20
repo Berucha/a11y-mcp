@@ -109,11 +109,12 @@
 ┌─────────────────────────────────────────────────────────┐
 │ analyze-pr-mcp.js                                       │
 │                                                         │
-│  • Fetch PR files via GitHub API                       │
-│  • Filter relevant files                                │
+│  • Fetch PR files via GitHub API (@octokit/rest)      │
+│  • Filter relevant files (.jsx, .tsx, .js, .css, etc.) │
 │  • Call mcp-client.js (checkAccessibilityBatch)         │
 │  • Aggregate results                                    │
-│  • Post to PR via GitHub API                           │
+│  • Post PR comment via GitHub API                      │
+│  • Create Check Run (pass/fail)                        │
 └──────┬──────────────────────────────────────────────────┘
        │
        ▼
@@ -170,13 +171,13 @@
 │ Rule Engine                                              │
 │                                                         │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐ │
-│  │ WCAG 2.2    │  │ LDS          │  │ Config      │ │
-│  │ Rules       │  │ Validation   │  │ Manager     │ │
-│  │             │  │              │  │             │ │
-│  │ • 25+ rules │  │ • Component  │  │ • Per-repo  │ │
-│  │ • A & AA    │  │   checking   │  │   settings  │ │
-│  │ • Fix       │  │ • Storybook  │  │ • Hot-reload│ │
-│  │   suggestions│  │   API       │  │             │ │
+│  │ WCAG 2.2    │  │ Color        │  │ Rules       │ │
+│  │ Rules       │  │ Contrast     │  │ Embedded    │ │
+│  │             │  │ Calculator  │  │ in Analyzers│ │
+│  │ • 15+ rules │  │             │  │             │ │
+│  │ • A & AA    │  │ • WCAG AA   │  │ • Regex     │ │
+│  │ • Fix       │  │   compliance│  │   patterns  │ │
+│  │   suggestions│  │             │  │ • AST rules │ │
 │  └──────────────┘  └──────────────┘  └──────────────┘ │
 └──────┬──────────────────────────────────────────────────┘
        │
@@ -260,14 +261,15 @@ File Analysis Request
 ┌─────────────────────────────────────────────────────────┐
 │                    Runtime Layer                         │
 │  • Node.js 18+                                          │
-│  • ES Modules                                           │
-│  • JSON-RPC 2.0 (MCP Protocol)                          │
+│  • ES Modules (import/export)                          │
+│  • JSON-RPC 2.0 (MCP Protocol)                         │
 └─────────────────────────────────────────────────────────┘
                             │
                             ▼
 ┌─────────────────────────────────────────────────────────┐
 │                    Protocol Layer                        │
 │  • Model Context Protocol (MCP)                         │
+│  • @modelcontextprotocol/sdk                            │
 │  • Stdio Transport                                      │
 │  • JSON-RPC Communication                               │
 └─────────────────────────────────────────────────────────┘
@@ -276,9 +278,10 @@ File Analysis Request
 ┌─────────────────────────────────────────────────────────┐
 │                    Analysis Layer                        │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐ │
-│  │ Fast Parser  │  │ AST Parser   │  │ Rule Engine  │ │
-│  │ (Regex)      │  │ (Babel/      │  │ (WCAG 2.2)  │ │
-│  │              │  │  PostCSS)    │  │              │ │
+│  │ Fast Parser  │  │ AST Parser   │  │ Hybrid       │ │
+│  │ (Regex)      │  │ (Babel/      │  │ Analyzer    │ │
+│  │ regex-       │  │  PostCSS)    │  │ (Decision) │ │
+│  │ analyzer.js  │  │              │  │              │ │
 │  └──────────────┘  └──────────────┘  └──────────────┘ │
 └─────────────────────────────────────────────────────────┘
                             │
@@ -287,7 +290,9 @@ File Analysis Request
 │                    Integration Layer                      │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐ │
 │  │ GitHub      │  │ MCP Server  │  │ CLI Tool     │ │
-│  │ Actions     │  │             │  │              │ │
+│  │ Actions     │  │ mcp-server. │  │ cli-scanner. │ │
+│  │ analyze-pr- │  │ js          │  │ js           │ │
+│  │ mcp.js      │  │             │  │              │ │
 │  └──────────────┘  └──────────────┘  └──────────────┘ │
 └─────────────────────────────────────────────────────────┘
 ```
@@ -331,13 +336,14 @@ File Analysis Request
 │              External Integrations                        │
 │                                                          │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  │
-│  │ GitHub API  │  │ LDS         │  │ Config      │  │
-│  │             │  │ Storybook   │  │ Files      │  │
-│  │ • PR        │  │             │  │            │  │
-│  │   Comments  │  │ • Component │  │ • .a11y/   │  │
-│  │ • Check     │  │   Specs     │  │   config.json│ │
-│  │   Runs      │  │ • Validation │  │            │  │
-│  │ • Artifacts │  │ • Caching   │  │            │  │
+│  │ GitHub API  │  │ MCP Client  │  │ Scripts     │  │
+│  │             │  │             │  │             │  │
+│  │ • PR        │  │ • mcp-      │  │ • analyze-  │  │
+│  │   Comments  │  │   client.js  │  │   pr-mcp.js │  │
+│  │ • Check     │  │ • JSON-RPC  │  │ • color-    │  │
+│  │   Runs      │  │   stdio     │  │   contrast  │  │
+│  │ • Artifacts │  │             │  │ • setup-    │  │
+│  │ (@octokit)  │  │             │  │   integration│ │
 │  └──────────────┘  └──────────────┘  └──────────────┘  │
 └─────────────────────────────────────────────────────────┘
 ```
