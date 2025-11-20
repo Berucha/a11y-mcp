@@ -74,7 +74,7 @@ Developer → Pull Request → GitHub Actions → MCP Server → Analysis → PR
    - **Result**: 2-3 seconds for 100 files with 95%+ accuracy
 
 4. **WCAG 2.2 AA Rule Engine**
-   - 25+ comprehensive violation checks
+   - 15+ comprehensive violation checks
    - Covers images, buttons, forms, ARIA, headings, CSS, and more
 
 ---
@@ -252,7 +252,7 @@ export const GoodComponent = () => {
 ### Demo 3: Show Configuration
 
 **What to Show:**
-1. Open `.a11y/config.json`
+1. (Optional) Review `.a11y/config.json` (Note: Full configuration support is planned for Phase 3)
 2. Show customizable options:
    - WCAG level (A, AA, AAA)
    - Failure thresholds
@@ -316,7 +316,7 @@ A:
 - Future enhancements (Phase 3) will include AI-assisted improvements
 
 **Q: Can we customize which checks run?**
-A: Yes! The `.a11y/config.json` file allows you to:
+A: Configuration support is planned for Phase 3. The `.a11y/config.json` file will allow you to:
 - Enable/disable specific rules
 - Adjust severity levels
 - Set failure thresholds

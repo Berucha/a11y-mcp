@@ -17,7 +17,7 @@
 ### Core Functionality (Production Ready)
 - **Hybrid Analysis Engine**: Fast regex (1-5ms) + AST parsing (50-200ms) for 95%+ accuracy
 - **Multi-File Type Support**: Analyze `.js`, `.jsx`, `.ts`, `.tsx`, `.html`, `.htm`, `.css`, and `.scss` files
-- **WCAG 2.2 AA Compliance**: 25+ comprehensive violation checks
+- **WCAG 2.2 AA Compliance**: 15+ comprehensive violation checks
 - **GitHub Actions Integration**: Automated PR checks with detailed violation reports
 - **MCP Protocol**: Standardized JSON-RPC interface for tool integration
 - **Easy Integration**: One-command setup for teams (5 minutes)
@@ -34,23 +34,28 @@
 
 #### Images & Media
 1. **Missing Alt Text**: Detects `<img>` tags without `alt` attributes
-2. **Icon Accessibility**: Identifies icon elements (Font Awesome, etc.) without labels
 
 #### Interactive Elements
-3. **Div as Button**: Flags `<div>` elements with `onClick` handlers (should use `<button>`)
-4. **Empty Buttons**: Detects buttons without text content or `aria-label`
-5. **Generic Link Text**: Finds links with non-descriptive text ("click here", "read more")
+2. **Div as Button**: Flags `<div>` elements with `onClick` handlers (should use `<button>`)
+3. **Empty Buttons**: Detects buttons without text content or `aria-label`
+4. **Generic Link Text**: Finds links with non-descriptive text ("click here", "read more")
 
 #### Forms
-6. **Inputs Without Labels**: Identifies form inputs missing associated `<label>` elements
+5. **Inputs Without Labels**: Identifies form inputs missing associated `<label>` elements
 
 #### Document Structure
-7. **Missing Language**: Detects HTML documents without `lang` attribute
-8. **Missing Page Title**: Identifies HTML without `<title>` element
-9. **Iframes Without Title**: Flags `<iframe>` elements without `title` attribute
+6. **Missing Language**: Detects HTML documents without `lang` attribute
+7. **Missing Page Title**: Identifies HTML without `<title>` element
+8. **Iframes Without Title**: Flags `<iframe>` elements without `title` attribute
 
-#### Focus & Keyboard
-10. **Missing Focus Styles**: Detects CSS with `:focus { outline: none }` without alternative focus indicators
+#### Focus & Keyboard (CSS)
+9. **Missing Focus Styles**: Detects CSS with missing `:focus` styles
+10. **Outline Removed Without Alternative**: Flags `outline: none` without alternative focus indicators
+11. **Font Size Too Small**: Detects font sizes below readable minimums
+12. **Touch Targets Too Small**: Flags interactive elements below 44x44px minimum
+13. **Display None on Interactive**: Warns about `display: none` hiding interactive content
+14. **Transparent Text Color**: Detects `color: transparent` making text invisible
+15. **Pointer Events Disabled**: Flags `pointer-events: none` on interactive elements
 
 ### MCP Tools Available
 
@@ -433,11 +438,11 @@ Future: LDS Storybook integration →
 
 ### Analysis Method
 
-**Pattern Matching** (Current Implementation):
-- Regex-based detection of common patterns
-- Fast and lightweight
-- No AST parsing required
-- Covers 10 most common WCAG violations
+**Hybrid Analysis** (Current Implementation):
+- Fast regex-based detection (1-5ms) for simple patterns
+- AST parsing (50-200ms) for complex violations when needed
+- Smart routing automatically chooses the best approach
+- Covers 15+ WCAG 2.2 AA violations
 
 **Future Enhancement - LDS Integration**:
 - Query LDS Storybook API for component specs
@@ -539,8 +544,8 @@ npm list @modelcontextprotocol/sdk
 
 **Q: No violations found but I see issues in my code**
 - Check if file extension is supported (`.js`, `.jsx`, `.ts`, `.tsx`, `.html`, `.css`, `.scss`)
-- Violation type may not be in the current 10 checks
-- Pattern matching may not catch complex cases
+- Violation type may not be in the current 15+ checks
+- Some complex violations may require AST parsing (automatically used when needed)
 
 **Q: GitHub Actions workflow doesn't run**
 ```bash
@@ -593,8 +598,8 @@ git push
 ## 🔄 Roadmap
 
 ### ✅ Phase 1 - MVP (Current)
-- ✅ 10 common accessibility checks (WCAG 2.2 AA)
-- ✅ Pattern-based detection (regex)
+- ✅ 15+ accessibility checks (WCAG 2.2 AA)
+- ✅ Hybrid analysis (fast regex + AST parsing)
 - ✅ MCP protocol implementation
 - ✅ GitHub Actions integration
 - ✅ CLI scanner for local testing
@@ -608,9 +613,8 @@ git push
 - 🔲 **Design system compliance scoring**: Track LDS adoption across repositories
 
 ### 🔮 Phase 3 - Advanced Features (Future)
-- 🔲 AST-based parsing for enhanced accuracy
-- 🔲 Additional WCAG criteria (color contrast, heading hierarchy, ARIA validation)
-- 🔲 Configurable rules engine (per-repo `.a11y/config.json`)
+- 🔲 Additional WCAG criteria (color contrast calculation, heading hierarchy validation)
+- 🔲 Configurable rules engine (per-repo `.a11y/config.json` - file created but not yet functional)
 - 🔲 HTML rendering for runtime checks (detect dynamic violations)
 - 🔲 AI-assisted code fixes (automated PR suggestions)
 - 🔲 VS Code extension for inline checks
@@ -626,7 +630,7 @@ git push
 
 ## 📄 License
 
-MIT License - see [LICENSE.txt](LICENSE.txt) file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 

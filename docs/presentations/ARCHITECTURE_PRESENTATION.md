@@ -50,11 +50,11 @@
 ┌─────────────────────────────────────────────────────────────┐
 │              WCAG 2.2 AA RULE ENGINE                         │
 │                                                              │
-│  Applies 25+ WCAG 2.2 AA rules:                            │
-│  • Perceivable (alt text, color contrast)                   │
-│  • Operable (keyboard, focus, timing)                      │
-│  • Understandable (labels, language)                       │
-│  • Robust (ARIA, semantic HTML)                             │
+│  Applies 15+ WCAG 2.2 AA checks:                           │
+│  • Perceivable (alt text, font size, color)                 │
+│  • Operable (keyboard, focus, touch targets)                │
+│  • Understandable (labels, language, link text)             │
+│  • Robust (semantic HTML, form labels)                      │
 └───────────────────────┬─────────────────────────────────────┘
                         │
                         ▼
@@ -98,9 +98,9 @@
 │                                                              │
 │  ┌──────────────────────────────────────────────────────┐ │
 │  │  Rule Engine                                          │ │
-│  │  • WCAG 2.2 AA rules                                 │ │
-│  │  • LDS validation                                     │ │
-│  │  • Configurable                                       │ │
+│  │  • WCAG 2.2 AA rules (15+ checks)                    │ │
+│  │  • Embedded in analyzers                              │ │
+│  │  • Configurable (planned)                             │ │
 │  └──────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -147,9 +147,9 @@ Runtime:        Node.js 18+, ES Modules
 Protocol:       Model Context Protocol (MCP)
                 JSON-RPC 2.0 over stdio
 Parsing:        Regex (fast) + Babel/PostCSS (accurate)
-Analysis:       WCAG 2.2 AA Rule Engine
+Analysis:       WCAG 2.2 AA Rule Engine (15+ checks)
 Integration:    GitHub Actions, GitHub API
-Validation:     LDS Storybook (optional)
+Validation:     LDS Storybook (planned - Phase 2)
 ```
 
 ## Performance Profile
@@ -174,9 +174,10 @@ Validation:     LDS Storybook (optional)
 ┌─────────────────────────────────────────────────────────┐
 │  Your Repository                                         │
 │  • .github/workflows/accessibility-review.yml           │
-│  • .github/a11y-mcp/ (MCP server)                       │
-│  • .a11y/config.json (configuration)                    │
-│  • scripts/ (analysis scripts)                          │
+│  • .github/a11y-mcp/ (MCP server files)                 │
+│  • scripts/analyze-pr-mcp.js (PR analyzer)              │
+│  • scripts/mcp-client.js (MCP client)                   │
+│  • .a11y/config.json (configuration - planned)          │
 └─────────────────────────────────────────────────────────┘
                         │
                         ▼
@@ -189,22 +190,22 @@ Validation:     LDS Storybook (optional)
                         │
                         ▼
 ┌─────────────────────────────────────────────────────────┐
-│  External Services (Optional)                            │
-│  • LDS Storybook API (component validation)             │
-│  • GitHub API (PR comments, check runs)                 │
+│  External Services                                        │
+│  • GitHub API (PR comments, check runs)                  │
+│  • LDS Storybook API (planned - Phase 2)                 │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ## Key Benefits
 
 ```
-✅ Comprehensive: 25+ WCAG 2.2 AA checks
+✅ Comprehensive: 15+ WCAG 2.2 AA checks
 ✅ Fast: Hybrid approach (2-3s for 100 files)
 ✅ Accurate: 95%+ detection rate
 ✅ Easy: 5-minute setup
-✅ Flexible: Per-repo configuration
-✅ Standardized: MCP protocol
+✅ Standardized: MCP protocol (JSON-RPC)
 ✅ Scalable: Works with any team size
+✅ Extensible: Ready for LDS integration (Phase 2)
 ```
 
 ---

@@ -101,7 +101,7 @@ your-repo/
 
 ## ⚙️ Configuration
 
-Edit `.a11y/config.json`:
+Edit `.a11y/config.json` (Note: Configuration support is planned for Phase 3, currently uses defaults):
 
 ```json
 {
@@ -121,7 +121,7 @@ Edit `.a11y/config.json`:
 
 ## 📊 What Gets Checked
 
-- **25+ WCAG 2.2 AA violation checks**
+- **15+ WCAG 2.2 AA violation checks**
 - **HTML/JSX/TSX**: Images, buttons, forms, ARIA, headings, etc.
 - **CSS/SCSS**: Focus styles, contrast, sizing, etc.
 

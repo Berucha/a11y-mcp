@@ -8,7 +8,7 @@
 │                                                          │
 │  Automated WCAG 2.2 AA enforcement on every PR          │
 │                                                          │
-│  ✅ Comprehensive: 25+ violation checks                  │
+│  ✅ Comprehensive: 15+ violation checks                  │
 │  ✅ Fast: 2-3 seconds for 100 files                     │
 │  ✅ Accurate: 95%+ detection rate                        │
 │  ✅ Easy: 5-minute integration                         │
@@ -83,7 +83,7 @@ Results posted to PR
                 ▼
 ┌─────────────────────────────────────────────────────────┐
 │  WCAG 2.2 AA Rule Engine                                │
-│  • 25+ violation checks                                 │
+│  • 15+ violation checks                                 │
 │  • Perceivable, Operable, Understandable, Robust        │
 └───────────────┬─────────────────────────────────────────┘
                 │
@@ -174,7 +174,7 @@ For Company:
 ```
 1. Review architecture diagram
 2. Run setup script in your repo
-3. Configure .a11y/config.json
+3. (Optional) Review .a11y/config.json (full config support planned for Phase 3)
 4. Test with a sample PR
 5. Roll out to team
 

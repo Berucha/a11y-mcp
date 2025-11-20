@@ -48,9 +48,11 @@ your-repo/
 
 ## Configuration
 
-### Basic Configuration
+> **Note:** Configuration file (`.a11y/config.json`) is created by the setup script but is not yet fully functional. Full configuration support is planned for Phase 3. Currently, all checks run with default settings.
 
-Edit `.a11y/config.json`:
+### Basic Configuration (Planned - Phase 3)
+
+Edit `.a11y/config.json` (when fully implemented):
 
 ```json
 {
@@ -82,7 +84,7 @@ Enable/disable specific rules:
 }
 ```
 
-### LDS Integration (Optional)
+### LDS Integration (Planned - Phase 2)
 
 ```json
 {
@@ -94,6 +96,8 @@ Enable/disable specific rules:
 }
 ```
 
+> **Note:** LDS integration is planned for Phase 2 and not yet implemented.
+
 ## How It Works
 
 1. **PR Created/Updated** → GitHub Actions triggers
@@ -104,9 +108,9 @@ Enable/disable specific rules:
 
 ## Customization
 
-### Ignore Specific Files
+### Ignore Specific Files (Planned - Phase 3)
 
-Add to `.a11y/config.json`:
+Add to `.a11y/config.json` (when fully implemented):
 
 ```json
 {
