@@ -361,19 +361,21 @@ a11y-mcp/
 4. **MCP Client**: `mcp-client.js` for programmatic access
 5. **GitHub API**: PR comments and check runs via `@octokit/rest`
 
-**Planned Integrations:**
-- **LDS Storybook**: Component validation (Phase 2)
-- **Configuration**: Per-repo customization (Phase 3)
-
-- **Current Integrations**: Five ways to use the system right now
+**Current Integration Notes**: Five ways to use the system right now
   1. **GitHub Actions**: Automated - runs on every PR automatically
   2. **MCP Protocol**: Standardized - works with any MCP-compatible tool
   3. **CLI Tool**: Local development - test before committing
   4. **MCP Client**: Programmatic - integrate into custom workflows
   5. **GitHub API**: Results delivery - PR comments and check runs
-- **Planned Features**: 
+
+**Planned Integrations:**
+- **LDS Storybook**: Component validation (Phase 2)
+- **Configuration**: Per-repo customization (Phase 3)
+
+**Planned Features Notes**: 
   - LDS Storybook integration will validate component usage against design system (Phase 2)
   - Configuration system will allow per-repo customization of rules and thresholds (Phase 3)
-- **Key Point**: The MCP protocol makes this extensible - new integrations can be added without changing core code
+
+**Key Point**: The MCP protocol makes this extensible - new integrations can be added without changing core code
 
 
