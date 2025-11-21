@@ -83,27 +83,30 @@ Developer → Pull Request → GitHub Actions → MCP Server → Analysis → PR
 
 ### Slide 4: Comprehensive Coverage
 
-**HTML/JSX/TSX Checks (15+):**
+**HTML/JSX/TSX Checks (14 checks):**
 - Missing alt text on images
 - Divs used as buttons (should use `<button>`)
-- Empty buttons without labels
+- Empty buttons without accessible names
 - Form inputs without labels
+- Placeholder used as label (should use proper `<label>`)
 - Generic link text ("click here", "read more")
-- Missing HTML lang attribute
-- Missing page titles
+- Missing h1 heading
+- Skipped heading levels (e.g., h1 → h3)
+- Duplicate IDs
+- ARIA labelledby invalid references
+- Custom interactive elements missing keyboard support
+- Missing HTML lang attribute (HTML only)
+- Missing page title (HTML only)
 - Iframes without titles
-- ARIA validation
-- Heading hierarchy
-- Keyboard navigation
-- Focus management
-- And more...
 
-**CSS/SCSS Checks (10+):**
+**CSS/SCSS Checks (7 checks):**
 - Missing focus styles
-- `outline: none` without alternative
-- Color contrast violations
-- Touch target sizes
-- And more...
+- `outline: none` or `outline: 0` without alternative
+- Font size too small (<10px error, <12px warning)
+- Touch targets too small (<44px for interactive elements)
+- `display: none` on interactive elements
+- `color: transparent` (invisible text)
+- `pointer-events: none` on interactive elements
 
 **Supported File Types:**
 - `.js`, `.jsx`, `.ts`, `.tsx` - React/TypeScript components
