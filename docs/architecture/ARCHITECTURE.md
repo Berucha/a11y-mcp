@@ -22,7 +22,7 @@ graph TB
         
         subgraph "Analysis Engine"
             FastPath[Fast Path<br/>Regex Checks]
-            ASTPath[AST Path<br/>Babel/PostCSS]
+            ContextPath[Context Path<br/>Enhanced Regex]
             Hybrid[Hybrid Decision<br/>Engine]
         end
         
@@ -34,8 +34,8 @@ graph TB
         
         subgraph "Parsers"
             RegexParser[Regex Parser<br/>Pattern Matching]
-            JSXParser[JSX/TSX Parser<br/>Babel AST]
-            CSSParser[CSS Parser<br/>PostCSS]
+            JSXParser[JSX/TSX Parser<br/>Contextual]
+            CSSParser[CSS Parser<br/>Contextual]
         end
     end
     
@@ -60,11 +60,11 @@ graph TB
     MCPServer --> Router
     Router --> Hybrid
     Hybrid -->|Simple Cases| FastPath
-    Hybrid -->|Complex Cases| ASTPath
+    Hybrid -->|Complex Cases| ContextPath
     
     FastPath --> RegexParser
-    ASTPath --> JSXParser
-    ASTPath --> CSSParser
+    ContextPath --> JSXParser
+    ContextPath --> CSSParser
     
     RegexParser --> WCAGEngine
     JSXParser --> WCAGEngine
@@ -86,8 +86,8 @@ graph TB
 - **Starting from the top**: When a developer creates a Pull Request, GitHub Actions automatically triggers
 - **Workflow setup**: The system checks out code, sets up Node.js, and installs dependencies
 - **MCP Server**: This is the heart of our system - it receives requests via JSON-RPC protocol
-- **Hybrid Decision Engine**: The smart routing system decides whether to use fast regex (1-5ms) or AST parsing (50-200ms) based on code complexity
-- **Two analysis paths**: Simple violations like missing alt text use regex (fast), while complex cases with ARIA or React hooks use AST parsing (accurate)
+- **Hybrid Decision Engine**: The smart routing system decides whether to use fast regex (1-5ms) or enhanced contextual analysis based on code complexity
+- **Two analysis paths**: Simple violations like missing alt text use regex (fast), while complex cases with ARIA or React hooks use enhanced contextual analysis (accurate)
 - **Rule Engine**: All results go through WCAG 2.2 rule validation - currently 15+ checks implemented
 - **Output**: Results are posted as PR comments, check runs, and artifacts for detailed review
 - **Note on LDS**: The LDS Storybook integration is shown but is planned for Phase 2 (not yet implemented)
