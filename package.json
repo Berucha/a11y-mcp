@@ -36,21 +36,11 @@
   "author": "MiniMax Agent",
   "license": "MIT",
   "dependencies": {
-    "@babel/core": "^7.25.0",
-    "@babel/parser": "^7.28.5",
-    "@babel/traverse": "^7.28.5",
-    "@babel/types": "^7.25.0",
     "@modelcontextprotocol/sdk": "^1.21.0",
     "@octokit/rest": "^22.0.1",
-    "postcss": "^8.5.6",
-    "postcss-scss": "^4.0.9",
-    "stylelint": "^16.2.0",
-    "stylelint-order": "^6.0.4",
     "typescript": "^5.5.4"
   },
   "devDependencies": {
-    "@types/babel__core": "^7.20.5",
-    "@types/babel__traverse": "^7.20.6",
     "@types/node": "^18.19.0",
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
