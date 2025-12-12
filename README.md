@@ -15,7 +15,7 @@
 ## 🌟 Features
 
 ### Core Functionality (Production Ready)
-- **Hybrid Analysis Engine**: Fast regex (1-5ms) + AST parsing (50-200ms) for 95%+ accuracy
+- **Hybrid Analysis Engine**: Fast regex (1-5ms) + Enhanced Contextual Analysis for 95%+ accuracy
 - **Multi-File Type Support**: Analyze `.js`, `.jsx`, `.ts`, `.tsx`, `.html`, `.htm`, `.css`, and `.scss` files
 - **WCAG 2.2 AA Compliance**: 15+ comprehensive violation checks
 - **GitHub Actions Integration**: Automated PR checks with detailed violation reports
@@ -397,7 +397,7 @@ EOF
            ▼
 ┌─────────────────────┐
 │  MCP Server         │  src/mcp-server.js (production)
-│  - check_a11y       │  Uses hybrid analyzer (regex + AST)
+│  - check_a11y       │  Uses hybrid analyzer (regex + enhanced context)
 │  - batch_check      │  Returns violations + suggestions
 │  - suggest_fix      │
 └──────────┬──────────┘
@@ -414,7 +414,7 @@ Future: LDS Storybook integration →
 
 **1. Production MCP Server** (`src/mcp-server.js`)
 - Implements Model Context Protocol (JSON-RPC 2.0)
-- Uses hybrid analyzer (fast regex + AST parsing)
+- Uses hybrid analyzer (fast regex + enhanced context)
 - Provides 3 tools for accessibility checking
 - Returns structured JSON results
 
@@ -440,7 +440,7 @@ Future: LDS Storybook integration →
 
 **Hybrid Analysis** (Current Implementation):
 - Fast regex-based detection (1-5ms) for simple patterns
-- AST parsing (50-200ms) for complex violations when needed
+- Enhanced contextual analysis for complex violations when needed
 - Smart routing automatically chooses the best approach
 - Covers 15+ WCAG 2.2 AA violations
 
@@ -590,6 +590,7 @@ git push
 - **[Quick Start Guide](docs/getting-started/QUICK_START.md)** - Get started in 5 minutes
 - **[Beginner's Guide](docs/getting-started/BEGINNERS_GUIDE.md)** - Complete step-by-step setup (recommended for first-time users)
 - **[Integration Guide](docs/getting-started/INTEGRATION_GUIDE.md)** - Detailed integration instructions
+- **[PowerShell Setup](docs/guides/POWERSHELL_SETUP.md)** - Guide for Windows users
 - **[Architecture](docs/architecture/ARCHITECTURE.md)** - System design and components
 - **[Presentations](docs/presentations/)** - Team presentation materials
 - **[Examples](examples/)** - Sample files with accessibility violations for testing
