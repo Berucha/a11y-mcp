@@ -28,19 +28,18 @@
 5. ✅ **display: none on interactive** (2.1.1, 4.1.2) - NEW
 6. ✅ **color: transparent** (1.4.3) - NEW
 7. ✅ **pointer-events: none** (2.1.1, 2.5.3) - NEW
-8. ⚠️ **Color contrast** (1.4.3) - Module created, needs integration
+8. ✅ **Color contrast** (1.4.3) - Integrated
 
 ## 📊 Coverage Statistics
 
-- **Total Checks**: 22+
-- **WCAG 2.2 AA Criteria Covered**: ~15 criteria
+- **Total Checks**: 23+
+- **WCAG 2.2 AA Criteria Covered**: ~16 criteria
 - **File Types Supported**: .js, .jsx, .ts, .tsx, .html, .htm, .css, .scss
-- **Detection Method**: Pattern matching (regex-based)
+- **Detection Method**: Hybrid (Regex + Enhanced Context)
 
 ## 🚧 Still To Implement
 
 ### High Priority
-- [ ] Color contrast calculation (module created, needs integration)
 - [ ] Icon accessibility (Font Awesome, Material Icons)
 - [ ] Modal/dialog accessibility (focus trap, aria-modal)
 - [ ] Dynamic content announcements (aria-live)
